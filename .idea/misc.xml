@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/background_mess.xml" value="0.2" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/bitmap_background_mes.xml" value="0.1495" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/ic_play_foreground.xml" value="0.1" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/mflower.xml" value="0.1" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/rectangle.xml" value="0.1495" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/splashbackground.xml" value="0.148" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/drawable/triangle.xml" value="0.1495" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_main2.xml" value="0.22780797101449277" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_main3.xml" value="0.1" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_main4.xml" value="0.22780797101449277" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/activity_test_with_fragment.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_1.xml" value="0.43771626297577854" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_2.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_music.xml" value="0.121875" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_news.xml" value="0.121875" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_second.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_third.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/fragment_time.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/item_integer.xml" value="0.536" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/item_integer1.xml" value="0.3096885813148789" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/item_integer2.xml" value="0.1265625" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/layout/item_page.xml" value="0.12083333333333333" />
+        <entry key="..\:/spacework/androidStudio_workspace/Learning/app/src/main/res/menu/bottom_navigation.xml" value="0.121875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

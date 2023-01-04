@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.Fragment1">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="#F4A77D">
+        <TextView
+            android:id="@+id/tv_fragment1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fragment 1"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center" />
+        <EditText
+            android:id="@+id/edt_inputFragment1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/background_mess"/>
+        <Button
+            android:id="@+id/btn_sendDataFragment1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Send Data"/>
+
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp2_testInFrag1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"/>
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:progressMode="true"
+            android:layout_gravity="center"/>
+
+        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+            android:id="@+id/spring_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/worm_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:dotsColor="#AE22B8"
+            android:layout_marginTop="5dp"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="16dp"
+            app:dotsSpacing="4dp"
+            app:dotsStrokeWidth="2dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

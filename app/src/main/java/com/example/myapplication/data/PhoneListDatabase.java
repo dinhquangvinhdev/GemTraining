@@ -25,7 +25,8 @@ public class PhoneListDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        //create database
+        sqLiteDatabase.execSQL(DB_SCHEMA);
     }
 
     @Override

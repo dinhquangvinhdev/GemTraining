@@ -1,23 +1,37 @@
 package com.example.myapplication.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.Person;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.provider.UserDictionary;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestContentProviderActivity extends AppCompatActivity {
 
@@ -25,6 +39,8 @@ public class TestContentProviderActivity extends AppCompatActivity {
     private ListView lvData;
     private Button btnAddData;
     private Button btnFindText;
+    private ArrayAdapter<String> arrayAdapter;
+    private List<String> lString;
     // variable for content provider
     private String[] mProjection;
     private String selectionClause;
@@ -42,16 +58,26 @@ public class TestContentProviderActivity extends AppCompatActivity {
         lvData = findViewById(R.id.lv_data);
         btnAddData = findViewById(R.id.btn_addData);
         btnFindText = findViewById(R.id.btn_findTextData);
+        lString = new ArrayList<>();
 
-        //init variable
-        createSomeVariablesForProvider();
-        usingCursorForGetData();
+        //checkPermission
+        checkPermission();
 
+
+
+        //test for dictionary
+//        //init variable
+//        createSomeVariablesForProvider();
+//        usingCursorForGetData();
+
+
+        //test for contact
+        createVarContactProvider();
         //search data or get all
         btnFindText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchTextData();
+                searchTextDataContact();
             }
         });
 
@@ -64,15 +90,119 @@ public class TestContentProviderActivity extends AppCompatActivity {
         });
     }
 
+    private void createVarContactProvider() {
+        //defines the column for that wil be return for each row
+        this.mProjection = new String[]{
+                Contacts.People.NAME,
+                Contacts.People.NUMBER
+        };
+
+        //defines string for selection clause
+        this.selectionClause = null;
+
+        //Initialized an array to contain selection arguments
+        this.selectionArgs = new String[]{""};
+
+        //define uri
+        mUri = Contacts.People.CONTENT_URI;
+    }
+
+    private void searchTextDataContact() {
+        //get searchString
+        String searchString = edt.getText().toString();
+
+        if (TextUtils.isEmpty(searchString)){
+            Toast.makeText(this , "Please text something",Toast.LENGTH_SHORT).show();
+            selectionClause = null;
+            selectionArgs[0] = "";
+        } else{
+            selectionClause = Contacts.People.NAME + " = ?";
+            selectionArgs[0] = searchString;
+        }
+        usingCursorForGetDataContact();
+    }
+
+    private void usingCursorForGetDataContact() {
+        /*Create contentResolve to query*/
+        ContentResolver contentResolver = getContentResolver();
+        /*Uri for contentProvider*/
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        /*Create cursor for get Contact list through query by contentResolver*/
+        Cursor cursor = contentResolver.query(uri , null, null , null , null);
+        lString.clear();
+
+        //check if cursor not receive any column -> this is end of your day
+        if(cursor.getCount() > 0){
+            String nameContact, numberPhone;
+            int key_name, key_phone;
+            //traver the contact list to end
+            while (cursor.moveToNext()){
+                //get id column
+                key_name = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                key_phone = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                //check id column > 0
+                if(key_name >= 0 && key_phone > 0){
+                    nameContact = cursor.getString(key_name);
+                    numberPhone = cursor.getString(key_phone);
+                    lString.add(nameContact + " : " + numberPhone);
+                    Log.d("bibi" ,"Contact ## Name : " + nameContact + " || Phone : " + numberPhone);
+                }
+            }
+        }else{
+            Log.d("bibi","not receive any contact from your phone");
+        }
+
+        //add to ListView
+        arrayAdapter = new ArrayAdapter<String>(this ,R.layout.item_phone,lString);
+        lvData.setAdapter(arrayAdapter);
+    }
+
+    private void checkPermission() {
+            //check permission
+            if(ContextCompat.checkSelfPermission(this , Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[] {Manifest.permission.READ_CONTACTS},
+                        0
+                );
+            }else{
+                Log.d("bibi","granted read_contact permission");
+            }
+            if(ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.WRITE_CONTACTS},
+                        0
+                );
+            }else{
+                Log.d("bibi","granted write_contact permission");
+            }
+    }
+
     private void addNewContact() {
-        Cursor simple = getContentResolver().query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null,
-                null,
-                null,
-                null
-        );
-        Log.d("bibi" , simple.toString());
+        //init new data
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Contacts.People.NAME, "Test name");
+//        contentValues.put(ContactsContract.Contacts.Data.DATA1, "0904875633");
+        try {
+            Uri insertUri = getContentResolver().insert(
+                    Contacts.People.CONTENT_URI,
+                    contentValues
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void addNewContact2() {
+        //using implicit intent
+        Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+        contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+        contactIntent
+                .putExtra(ContactsContract.Intents.Insert.NAME , "New name")
+                .putExtra(ContactsContract.Intents.Insert.PHONE, "0904875633");
+        startActivity(contactIntent);
+
     }
 
     private void addNewData() {
@@ -97,7 +227,7 @@ public class TestContentProviderActivity extends AppCompatActivity {
         Log.d("bibi","After insert new data: " + mUri.toString());
     }
 
-    private void searchTextData() {
+    private void searchTextDataDictionary() {
         //get searchString
         String searchString = edt.getText().toString();
 
@@ -146,9 +276,6 @@ public class TestContentProviderActivity extends AppCompatActivity {
              */
             onCursorGetData(mCursor);
         }
-
-
-
     }
 
     private void onCursorGetData(Cursor mCursor) {

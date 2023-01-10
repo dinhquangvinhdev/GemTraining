@@ -61,10 +61,10 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0-alpha01"
     implementation "com.tbuonomo:dotsindicator:4.3"
 
-    def core_version = "1.9.0"
-
-    // Java language implementation
-    implementation "androidx.core:core:$core_version"
+//    def core_version = "1.9.0"
+//
+//    // Java language implementation
+//    implementation "androidx.core:core:$core_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

@@ -15,13 +15,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.broadcastReceiver.MBroad;
+import com.example.myapplication.broadcastReceiver.OrderBroadcast1;
+import com.example.myapplication.broadcastReceiver.OrderBroadcast2;
+import com.example.myapplication.broadcastReceiver.SenderReceiver;
 
 public class TestBroadcastReceiverActivity extends AppCompatActivity {
-
-    private MBroad mBroad;
-    int receiverFlags = 0;
-    boolean listenToBroadcastFromOtherApps = false;
-    private int data = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +30,26 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
         // it need implement androidx library but library required version android 33 ## LOL
 //        changeReceiverFlag(false);
 
-        //init broadcast dynamic
-        mBroad = new MBroad();
-        IntentFilter filter = new IntentFilter("android.intent.action.AIRPLANE_MODE");
-        filter.addAction("action.myaction");
-        registerReceiver(mBroad , filter);
+        //register a receiver
+        IntentFilter filter = new IntentFilter("action.myaction");
+        registerReceiver(new SenderReceiver() , filter);
 
-        //normal test send broad cast normal
-        testSendBroadcastNormal();
+        //test sendBroadcast(Intent)
+//        testSendBroadcastNormal();
+        //test sendOrderedBroadcast(Intent , String)
+        testSendBroadcastHigher();
+    }
+
+    private void testSendBroadcastHigher() {
+        Intent intent = new Intent("action.myaction");
+        Bundle bundle = new Bundle();
+        bundle.putString("stringExtra", "Start");
+        sendOrderedBroadcast(intent,null, new OrderBroadcast2(), null , 0 , "Start" , bundle);
     }
 
     private void testSendBroadcastNormal() {
         Intent intent = new Intent("action.myaction");
-        intent.putExtra("action",1);
+        intent.putExtra("stringExtra", "Start");
         sendBroadcast(intent);
     }
 
@@ -58,10 +63,5 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
 //            receiverFlags = ContextCompat.RECEIVER_NOT_EXPORTED;
 //        }
 //    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(mBroad);
-    }
+//    }
 }

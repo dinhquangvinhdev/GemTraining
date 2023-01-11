@@ -11,16 +11,17 @@ import android.widget.Toast;
  * This class is use for processing the intent receive by broadcast
  */
 public class MBroad extends BroadcastReceiver {
-    private int data;
+    private String data = "";
+    private final String THIS_PACKAGE= "MBroad";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         switch (intent.getAction()){
             case "action.myaction":
-                Log.d("bibi","before get data " + String.valueOf(data));
+                Log.d("bibi",THIS_PACKAGE + " before get data " + data);
                 Bundle bundle = intent.getExtras();
-                if(bundle != null){data = bundle.getInt("action");}
-                Log.d("bibi","after get data " + String.valueOf(data));
+                if(bundle != null){data = bundle.getString("stringExtra");}
+                Log.d("bibi",THIS_PACKAGE + " after get data " + data);
                 break;
             case "android.intent.action.AIRPLANE_MODE":
                 Toast.makeText(context, "change airplant", Toast.LENGTH_SHORT ).show();

@@ -44,10 +44,34 @@
 
         <receiver
             android:name=".broadcastReceiver.MBroad"
-            android:exported="true"
-            android:permission="android.intent.action.AIRPLANE_MODE">
-            <intent-filter>
+            android:permission="android.intent.action.AIRPLANE_MODE"
+            android:exported="true">
+            <intent-filter android:priority="2">
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
+                <action android:name="action.myaction"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".broadcastReceiver.OrderBroadcast1"
+            android:exported="true">
+            <intent-filter android:priority="2">
+                <action android:name="action.myaction"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".broadcastReceiver.OrderBroadcast2"
+            android:exported="true">
+            <intent-filter android:priority="3">
+                <action android:name="action.myaction"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".broadcastReceiver.SenderReceiver"
+            android:exported="true">
+            <intent-filter android:priority="1">
                 <action android:name="action.myaction"/>
             </intent-filter>
         </receiver>

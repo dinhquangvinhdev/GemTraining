@@ -20,6 +20,7 @@ import com.example.myapplication.broadcastReceiver.OrderBroadcast2;
 import com.example.myapplication.broadcastReceiver.SenderReceiver;
 
 public class TestBroadcastReceiverActivity extends AppCompatActivity {
+    private SenderReceiver senderReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,8 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
 
         //register a receiver
         IntentFilter filter = new IntentFilter("action.myaction");
-        registerReceiver(new SenderReceiver() , filter);
+        senderReceiver = new SenderReceiver();
+        registerReceiver(senderReceiver , filter);
 
         //test sendBroadcast(Intent)
 //        testSendBroadcastNormal();
@@ -53,7 +55,13 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
         sendBroadcast(intent);
     }
 
-//    private void changeReceiverFlag(boolean listenToBroadcastFromOtherApps) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(senderReceiver);
+    }
+
+    //    private void changeReceiverFlag(boolean listenToBroadcastFromOtherApps) {
 //        //create a boolean to protect app by other app send unprotected  broadcasts to your app
 //        if(listenToBroadcastFromOtherApps){
 //            //already receive intent

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
@@ -17,6 +18,9 @@ public class TestForegroundActivity extends AppCompatActivity {
 
     public static final String CHANNEL_ID = "exampleServiceChannel";
     private EditText editText;
+    private Button btnStartService;
+    private Button btnStopService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,24 @@ public class TestForegroundActivity extends AppCompatActivity {
         createChannelNotification();
 
         editText = findViewById(R.id.edt_input_data);
+        btnStartService = findViewById(R.id.btn_start_foreground_service);
+        btnStopService = findViewById(R.id.btn_stop_foreground_service);
+
+        btnStartService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(view);
+            }
+        });
+
+        btnStopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopService(view);
+            }
+        });
+
+
     }
 
     private void createChannelNotification() {
@@ -34,7 +56,7 @@ public class TestForegroundActivity extends AppCompatActivity {
             NotificationChannel notificationChannel = new NotificationChannel(
                     CHANNEL_ID,
                     "This is my test notification channel",
-                    NotificationManager.IMPORTANCE_HIGH
+                    NotificationManager.IMPORTANCE_DEFAULT
             );
             //create notification manager to run it
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -48,7 +70,7 @@ public class TestForegroundActivity extends AppCompatActivity {
         Intent intent = new Intent(this , ExampleForegroundService.class);
         Bundle bundle = new Bundle();
         bundle.putString("inputString", input);
-        intent.putExtra("data" ,bundle);
+        intent.putExtras(bundle);
         startService(intent);
     }
 

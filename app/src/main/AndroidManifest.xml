@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -41,6 +43,8 @@
         <activity
             android:name=".view.MainActivity4"
             android:exported="false" />
+
+        <service android:name=".service.ExampleForegroundService"/>
     </application>
 
 </manifest>

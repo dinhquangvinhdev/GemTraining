@@ -18,10 +18,7 @@ public class MBroad extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         switch (intent.getAction()){
             case "action.myaction":
-                Log.d("bibi",THIS_PACKAGE + " before get data " + data);
-                Bundle bundle = intent.getExtras();
-                if(bundle != null){data = bundle.getString("stringExtra");}
-                Log.d("bibi",THIS_PACKAGE + " after get data " + data);
+                Toast.makeText(context , "MBroad", Toast.LENGTH_LONG).show();
                 break;
             case "android.intent.action.AIRPLANE_MODE":
                 Toast.makeText(context, "change airplant", Toast.LENGTH_SHORT ).show();

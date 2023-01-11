@@ -2,6 +2,7 @@ package com.example.myapplication.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -21,6 +22,8 @@ import com.example.myapplication.broadcastReceiver.SenderReceiver;
 
 public class TestBroadcastReceiverActivity extends AppCompatActivity {
     private SenderReceiver senderReceiver;
+    private MBroad mBroad;
+    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +34,31 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
         // it need implement androidx library but library required version android 33 ## LOL
 //        changeReceiverFlag(false);
 
+        //init localBroadcastManager
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
         //register a receiver
         IntentFilter filter = new IntentFilter("action.myaction");
         senderReceiver = new SenderReceiver();
-        registerReceiver(senderReceiver , filter);
+        mBroad = new MBroad();
+        localBroadcastManager.registerReceiver(senderReceiver , filter);
+        localBroadcastManager.registerReceiver(mBroad , filter);
 
         //test sendBroadcast(Intent)
-//        testSendBroadcastNormal();
+        //testSendBroadcastNormal();
         //test sendOrderedBroadcast(Intent , String)
-        testSendBroadcastHigher();
+        //testSendBroadcastHigher();
+        //test LocalBroadcastManager
+        testLocalBroadcastManager();
+    }
+
+    private void testLocalBroadcastManager() {
+        Intent intent = new Intent("action.myaction");
+        intent.setPackage("com.example.myapplication");
+        Bundle bundle = new Bundle();
+        bundle.putString("stringExtra", "Start");
+        intent.putExtra("bundle" , bundle);
+        localBroadcastManager.sendBroadcast(intent);
     }
 
     private void testSendBroadcastHigher() {
@@ -58,7 +77,8 @@ public class TestBroadcastReceiverActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(senderReceiver);
+        localBroadcastManager.unregisterReceiver(senderReceiver);
+        localBroadcastManager.unregisterReceiver(mBroad);
     }
 
     //    private void changeReceiverFlag(boolean listenToBroadcastFromOtherApps) {

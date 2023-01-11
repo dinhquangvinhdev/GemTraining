@@ -6,12 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.example.myapplication.R;
 
 public class TestForegroundActivity extends AppCompatActivity {
 
     public static final String CHANNEL_ID = "exampleServiceChannel";
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,8 @@ public class TestForegroundActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_foreground);
 
         createChannelNotification();
+
+        editText = findViewById(R.id.edt_input_data);
 
     }
 

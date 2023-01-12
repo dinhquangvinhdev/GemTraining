@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.TestMessengerActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btn_start_mess_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send mess play music"
+        android:textSize="20sp"
+        android:onClick="sendMessStartMusic"/>
+
+    <Button
+        android:id="@+id/btn_pause_mess_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send mess pause music"
+        android:textSize="20sp"
+        android:onClick="sendMessPauseMusic"/>
+
+    <Button
+        android:id="@+id/btn_stop_mess_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send mess stop music"
+        android:textSize="20sp"
+        android:onClick="sendMessStopMusic"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="open other activity"
+        android:onClick="openOtherActivity"/>
+
+
+</LinearLayout>

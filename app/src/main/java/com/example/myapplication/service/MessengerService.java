@@ -18,9 +18,9 @@ import com.example.myapplication.R;
 import java.io.IOException;
 
 public class MessengerService extends Service {
-    static final int MSG_PLAY_MUSIC = 1;
-    static final int MSG_STOP_MUSIC = 2;
-    static final int MSG_PAUSE_MUSIC = 3;
+    public static final int MSG_PLAY_MUSIC = 1;
+    public static final int MSG_STOP_MUSIC = 2;
+    public static final int MSG_PAUSE_MUSIC = 3;
 
     static class IncomingHandler extends Handler{
         private Context applicationContext;

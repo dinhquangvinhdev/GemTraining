@@ -2,6 +2,7 @@ package com.example.myapplication.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -15,8 +16,8 @@ public class MBoundService extends Service {
     private final MediaPlayer player = MediaPlayer.create(this , R.raw.drum);
 
     public class LocalBinder extends Binder{
-        LocalBinder getService(){
-            return LocalBinder.this;
+        public MBoundService getService(){
+            return MBoundService.this;
         }
     }
 

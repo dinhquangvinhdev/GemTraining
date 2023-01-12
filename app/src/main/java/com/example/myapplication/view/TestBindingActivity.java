@@ -15,7 +15,6 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 import com.example.myapplication.service.MBoundService;
-
 public class TestBindingActivity extends AppCompatActivity {
 
     MBoundService mService;
@@ -52,7 +51,8 @@ public class TestBindingActivity extends AppCompatActivity {
             }
         });
 
-
+        //This is a comment for commit git about end of step extend class Binder
+        //The next step is about use Messenger
     }
 
     @Override

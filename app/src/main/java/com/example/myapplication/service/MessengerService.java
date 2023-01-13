@@ -21,14 +21,13 @@ public class MessengerService extends Service {
     public static final int MSG_PLAY_MUSIC = 1;
     public static final int MSG_STOP_MUSIC = 2;
     public static final int MSG_PAUSE_MUSIC = 3;
+    private MediaPlayer player;
 
-    static class IncomingHandler extends Handler{
+    public class IncomingHandler extends Handler{
         private Context applicationContext;
-        private MediaPlayer player;
 
-        IncomingHandler (Context context){
+        public IncomingHandler (Context context){
             applicationContext = context.getApplicationContext();
-            player = MediaPlayer.create(context , R.raw.drum);
         }
 
         @Override
@@ -47,30 +46,15 @@ public class MessengerService extends Service {
                     super .handleMessage(msg);
             }
         }
-
-        public void playMusic(){
-            if (player!=null && !player.isPlaying())
-                player.start();
-        }
-
-        public void pauseMusic(){
-            if(player!=null && player.isPlaying())
-                player.pause();
-        }
-
-        public void stopMusic(){
-            if(player!= null && player.isPlaying()){
-                player.stop();
-                try {
-                    player.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     private Messenger messenger;
+
+    @Override
+    public void onCreate() {
+        Log.d("bibi", "call onCreate inService");
+        super.onCreate();
+    }
 
     @Nullable
     @Override
@@ -78,5 +62,47 @@ public class MessengerService extends Service {
         Log.d("bibi", "call onBind create a new Messenger");
         messenger = new Messenger(new IncomingHandler(this));
         return messenger.getBinder();
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d("bibi", "Unbind service");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //<option> manual clean data
+        if(player != null){
+            player.stop();
+            player.release();
+            player = null;
+        }
+    }
+
+    public void playMusic(){
+        if(player == null){
+            player = MediaPlayer.create(this , R.raw.drum);
+            player.start();
+        }else if (!player.isPlaying()) {
+            player.start();
+        }
+    }
+
+    public void pauseMusic(){
+        if(player!=null && player.isPlaying())
+            player.pause();
+    }
+
+    public void stopMusic(){
+        if(player!= null && player.isPlaying()){
+            player.stop();
+            try {
+                player.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

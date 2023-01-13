@@ -42,9 +42,9 @@ public class TestMessengerActivity extends AppCompatActivity {
         /**
          * The first parameter is explicit intent
          * The second parameter is ServiceConnection
-         * The thỉdd parameter should set Context.BIND_AUTO_CREATE
+         * The third parameter should set Context.BIND_AUTO_CREATE
          */
-        bindService(new Intent(this , MessengerService.class), serviceConnection , Context.BIND_AUTO_CREATE);
+        mBound = bindService(new Intent(getApplicationContext() , MessengerService.class), serviceConnection , Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -58,6 +58,7 @@ public class TestMessengerActivity extends AppCompatActivity {
         super.onStop();
         Log.d("bibi", "Call onStop in Activity");
         if(mBound){
+            Log.d("bibi", "unbindService");
             unbindService(serviceConnection);
             mBound = false;
         }

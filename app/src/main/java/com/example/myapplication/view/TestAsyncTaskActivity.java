@@ -20,6 +20,7 @@ import com.example.myapplication.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -28,6 +29,7 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
     private String uri = "https://pbs.twimg.com/media/FZyplLdXEAQrbFP.jpg";
     Button btn;
     ImageView img;
+    ProgressBar pb;
     GridLayout gl;
 
     @Override
@@ -38,6 +40,7 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
         btn = findViewById(R.id.btn_run);
         img = findViewById(R.id.img_screen);
         gl = findViewById(R.id.gl_img);
+        pb = findViewById(R.id.pb_status);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +69,9 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
      * Integer: Progress --> input của onProgressUpdate
      * String: Result  --> là ouput của doInBackground và input của onPostExecute
      */
-    public class mTask extends AsyncTask<String, Integer , Bitmap>{
-
-        private Activity activity;
-        private ProgressBar pb;
+    private static class mTask extends AsyncTask<String, Integer , Bitmap>{
+        //using weakReference to avoid the leak memory
+        private WeakReference<TestAsyncTaskActivity> activityWeakReference;
 
         /**
          * Điểm đặc biệt
@@ -77,9 +79,9 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
          * Xử lý được dữ liệu lớn để updateUI
          * @param activity
          */
-        public mTask(Activity activity){
-            this.activity = activity;
-            pb = activity.findViewById(R.id.pb_status);
+        public mTask(TestAsyncTaskActivity activity){
+            //init WeekReference
+            activityWeakReference = new WeakReference<TestAsyncTaskActivity>(activity);
         }
 
         /**
@@ -89,9 +91,16 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            // check reference activity
+            TestAsyncTaskActivity activity = activityWeakReference.get();
+            if(activity == null || activity.isFinishing()){
+                //stop the AsyncTask
+                return;
+            }
+
             //Thông báo bắt đầu tải
             Toast.makeText(activity , "Bắt đầu tải", Toast.LENGTH_SHORT).show();
-            pb.setProgress(0);
+            activity.pb.setProgress(0);
         }
 
         /**
@@ -137,9 +146,15 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
+            // check reference activity
+            TestAsyncTaskActivity activity = activityWeakReference.get();
+            if(activity == null || activity.isFinishing()){
+                //stop the AsyncTask
+                return;
+            }
             //update giao diện thanh progressBar
             int number = values[0];
-            pb.setProgress(number);
+            activity.pb.setProgress(number);
         }
 
         /**
@@ -151,14 +166,22 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
+            // check reference activity
+            TestAsyncTaskActivity activity = activityWeakReference.get();
+            if(activity == null || activity.isFinishing()){
+                //stop the AsyncTask
+                return;
+            }
+
 //            //add new imageView into GridLayout
 //            ImageView imageView = new ImageView(activity);
 //            imageView.setLayoutParams(gl.getLayoutParams());
 //            imageView.setImageBitmap(bitmap);
 //            gl.addView(imageView);
-            img.setImageBitmap(bitmap);
+            activity.img.setImageBitmap(bitmap);
             Log.d("bibi", "AsyncTask onPostExecute: " + bitmap);
             Toast.makeText(activity, "Get Image Done", Toast.LENGTH_SHORT).show();
         }
+
     }
 }

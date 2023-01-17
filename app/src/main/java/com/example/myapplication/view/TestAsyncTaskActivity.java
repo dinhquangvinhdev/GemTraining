@@ -44,7 +44,6 @@ public class TestAsyncTaskActivity extends AppCompatActivity {
             public void onClick(View view) {
                 runAsyncTask();
 //                loadImageWithGlide();
-
             }
         });
 

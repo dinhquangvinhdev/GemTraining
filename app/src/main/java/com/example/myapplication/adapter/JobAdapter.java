@@ -50,18 +50,32 @@ public class JobAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder viewHolder;
+
         //inflate the layout for each row
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.item_job, viewGroup, false);
+            viewHolder = new ViewHolder(view);
+            //using tag for storing references of rows' view
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         //get item
         String item = (String) getItem(i);
 
         //set the text for TextView
-        TextView textView = view.findViewById(R.id.tv_title_job);
-        textView.setText(item);
+        viewHolder.tv.setText(item);
 
         return view;
+    }
+
+    private class ViewHolder {
+        TextView tv;
+
+        public ViewHolder(View view){
+            tv = view.findViewById(R.id.tv_title_job);
+        }
     }
 }

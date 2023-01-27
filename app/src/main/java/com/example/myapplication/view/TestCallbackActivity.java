@@ -4,21 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.JobAdapter;
 import com.example.myapplication.api.DrinksApi;
+import com.example.myapplication.mInterface.CallbackOnClickItemView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class TestCallbackActivity extends AppCompatActivity implements DrinksApi.DrinkApiCallback {
+public class TestCallbackActivity extends AppCompatActivity implements DrinksApi.DrinkApiCallback{
 
     private DrinksApi drinksApi;
     private TextView nameDrink;
@@ -34,6 +34,12 @@ public class TestCallbackActivity extends AppCompatActivity implements DrinksApi
         ArrayList<String> mArr = new ArrayList<String>(Arrays.asList("Job1", "Job2","Job3","Job4","Job5","Job6","Job7","Job8","Job9"));
         JobAdapter arrayAdapter = new JobAdapter(this, mArr);
         lvData.setAdapter(arrayAdapter);
+        lvData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "You click on position: "+ (i+1), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //test call back
         if(drinksApi == null) {

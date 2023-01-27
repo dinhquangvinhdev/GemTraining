@@ -1,15 +1,17 @@
 package com.example.myapplication.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.view.TestCallbackActivity;
+import com.example.myapplication.mInterface.CallbackOnClickItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +20,16 @@ public class JobAdapter extends BaseAdapter {
     private Context context;
     private List<String> mArrJob;
 
-    public JobAdapter(Context context, List<String> arr){
+    public JobAdapter(Context context, List<String> arr) {
         updateData(arr);
         this.context = context;
     }
 
     private void updateData(List<String> arr) {
-        if(mArrJob == null){
+        if (mArrJob == null) {
             mArrJob = new ArrayList<>();
             mArrJob.addAll(arr);
-        } else{
+        } else {
             mArrJob.clear();
             mArrJob.addAll(arr);
         }
@@ -53,7 +55,7 @@ public class JobAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         //inflate the layout for each row
-        if(view == null){
+        if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.item_job, viewGroup, false);
             viewHolder = new ViewHolder(view);
             //using tag for storing references of rows' view
@@ -74,8 +76,10 @@ public class JobAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView tv;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             tv = view.findViewById(R.id.tv_title_job);
         }
+
     }
+
 }

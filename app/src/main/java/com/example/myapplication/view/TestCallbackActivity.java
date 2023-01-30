@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.JobAdapter;
 import com.example.myapplication.api.DrinksApi;
-import com.example.myapplication.mInterface.CallbackOnClickItemView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class TestCallbackActivity extends AppCompatActivity implements DrinksApi
         lvData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "You click on position: "+ (i+1), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You click on position: "+ arrayAdapter.getItem(i), Toast.LENGTH_SHORT).show();
             }
         });
 

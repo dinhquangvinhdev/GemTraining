@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.mInterface.CallbackOnClickItemView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.TabCollectionAdapter;
@@ -28,7 +31,25 @@ public class TabLayoutActivity extends AppCompatActivity {
 
         setUI();
 
-        viewPager.setAdapter(new TabCollectionAdapter(this));
+        TabCollectionAdapter adapter = new TabCollectionAdapter(this);
+        viewPager.setAdapter(adapter);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d("bibi", "running here");
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         new TabLayoutMediator(tabLayout , viewPager ,
                 ((tab, position) -> tab.setText(tabTitles.get(position)))).attach();
     }

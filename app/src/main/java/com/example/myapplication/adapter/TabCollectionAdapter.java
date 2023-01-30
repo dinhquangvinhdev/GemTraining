@@ -12,6 +12,7 @@ import com.example.myapplication.view.fragment.GameFragment;
 import com.example.myapplication.view.fragment.HomeFragment;
 import com.example.myapplication.view.fragment.NoteFragment;
 import com.example.myapplication.view.fragment.SomethingFragment;
+import com.google.android.material.tabs.TabLayout;
 
 public class TabCollectionAdapter  extends FragmentStateAdapter {
     public TabCollectionAdapter(@NonNull FragmentActivity fragmentActivity) {

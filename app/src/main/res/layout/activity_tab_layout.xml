@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.TabLayoutActivity">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"/>-->
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tb_dashboard"
         android:layout_width="0dp"
@@ -24,9 +16,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed"
-        app:tabRippleColor="@null"
-        />
+        app:tabMode="auto"
+        app:tabRippleColor="@null" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp2_tab"

@@ -5,6 +5,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -62,6 +63,12 @@ public class TabLayoutActivity extends AppCompatActivity {
             //get inflate view of TextView
             TextView textView =
                     (TextView) LayoutInflater.from(this).inflate(R.layout.tab_title, null);
+            //set image cho tab title
+            textView.setCompoundDrawablesWithIntrinsicBounds(0 , R.drawable.ic_baseline_adjust , 0 , 0);
+            textView.setCompoundDrawablePadding((int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP , 4f , getResources().getDisplayMetrics()
+            ));
+            //set text cho tab title <should declare after image for set the text under the image>
             textView.setText(tabTitles.get(i));
             tabLayout.getTabAt(i).setCustomView(textView);
         }

@@ -7,6 +7,11 @@ public class Customer {
     public Customer() {
     }
 
+    public Customer(int age, String name) {
+        this.name = name;
+        this.age = age;
+    }
+
     public int getAge() {
         return age;
     }

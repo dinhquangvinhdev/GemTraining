@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.myapplication.database.DatabaseHandler;
 import com.example.myapplication.model.Customer;
 
+import java.util.List;
+
 public class CustomerManager {
     private DatabaseHandler databaseHandler;
 
@@ -19,5 +21,9 @@ public class CustomerManager {
 
     public Customer getCustomer(String name){
         return databaseHandler.queryACustomer(name);
+    }
+
+    public List<Customer> getALLCustomer(){
+        return databaseHandler.queryAllCustomer();
     }
 }

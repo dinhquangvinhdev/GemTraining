@@ -20,6 +20,7 @@ public class ExampleSQLiteActivity extends AppCompatActivity {
     private TextView tv_age;
     private Button btn_add_customer;
     private Button btn_get_customer;
+    private Button btn_get_all_customer;
     private CustomerManager manager;
 
 
@@ -43,15 +44,29 @@ public class ExampleSQLiteActivity extends AppCompatActivity {
         btn_get_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = edt_name.getText().toString();
-                Customer customer  = manager.getCustomer(name);
-                if(customer != null){
-                    tv_name.setText(customer.getName());
-                    tv_age.setText(String.valueOf(customer.getAge()));
-                }
+                getCustomerByName();
             }
         });
 
+        btn_get_all_customer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllCustomer();
+            }
+        });
+    }
+
+    private void getAllCustomer() {
+        manager.getALLCustomer();
+    }
+
+    private void getCustomerByName() {
+        String name = edt_name.getText().toString();
+        Customer customer  = manager.getCustomer(name);
+        if(customer != null){
+            tv_name.setText(customer.getName());
+            tv_age.setText(String.valueOf(customer.getAge()));
+        }
     }
 
     private void getUI() {
@@ -61,5 +76,6 @@ public class ExampleSQLiteActivity extends AppCompatActivity {
         tv_age = findViewById(R.id.tv_age);
         btn_add_customer = findViewById(R.id.btn_add_customer);
         btn_get_customer = findViewById(R.id.btn_get_customer_by_name);
+        btn_get_all_customer = findViewById(R.id.btn_get_all_customer);
     }
 }

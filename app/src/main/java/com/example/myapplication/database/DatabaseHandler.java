@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.model.Customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -73,6 +76,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } else {
             Log.d("bibi", "not found any customer");
         }
+        cursor.close();
         return null;
+    }
+
+    public List<Customer> queryAllCustomer(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Customer> arr = new ArrayList<>();
+        //create a cursor for read the db
+        Cursor cursor = db.query(TABLE_NAME , null ,null , null ,null, null,null);
+        if(cursor != null && cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                Customer customer = new Customer(cursor.getInt(0), cursor.getString(1));
+                Log.d("bibi", customer.toString());
+                arr.add(customer);
+            }
+        }
+        return arr;
     }
 }

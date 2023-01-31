@@ -1,29 +1,27 @@
 package com.example.myapplication.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.mInterface.RegisterEventListener;
 
 import java.util.ArrayList;
 
-public class MultiThreadActivity extends AppCompatActivity {
+public class MultiThreadActivity extends AppCompatActivity implements RegisterEventListener {
 
     private ArrayList<MThread> arr;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
     private Button btn;
+    private Button btnClickMe;
     private Boolean isRunning = false;
 
     @Override
@@ -40,13 +38,22 @@ public class MultiThreadActivity extends AppCompatActivity {
             }
         });
 
+        btnClickMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext() , "You are Clicking me", Toast.LENGTH_SHORT).show();
+                Log.d("bibi", "The status of Thear1 is: " + arr.get(0).isRunning);
+            }
+        });
+
+
     }
 
     private void createThreads() {
         arr = new ArrayList<>(3);
-        MThread mThread1 = new MThread(1);
-        MThread mThread2 = new MThread(2);
-        MThread mThread3 = new MThread(3);
+        MThread mThread1 = new MThread(1, this);
+        MThread mThread2 = new MThread(2, this);
+        MThread mThread3 = new MThread(3, this);
         arr.clear(); // Must handle thread to interrupt after clear this arr Threads
         arr.add(mThread1); arr.add(mThread2); arr.add(mThread3);
     }
@@ -82,24 +89,33 @@ public class MultiThreadActivity extends AppCompatActivity {
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
         btn = findViewById(R.id.btn_run_multi_thread);
+        btnClickMe = findViewById(R.id.btn_test);
     }
 
-    private void testThread() {
-        int count = 1;
-        MThread mThread = new MThread(1);
+    @Override
+    public void onAEvent(int number) {
+        Log.d("bibi", "running on AEvent");
+        //this Thread is used for test callback
+        MThread mThread = new MThread(4, this, number);
         mThread.start();
-        MThread mThread2 = new MThread(2);
-        mThread2.start();
-        MThread mThread3 = new MThread(3);
-        mThread3.start();
     }
 
     private class MThread extends Thread {
         private int choice = -1;
         private boolean isRunning = false;
+        private RegisterEventListener registerEventListener;
+        private int count = 0;
 
-        public MThread(int i) {
+        public MThread(int i, RegisterEventListener registerEventListener) {
+            this.registerEventListener = registerEventListener;
             choice = i;
+            this.count = 0;
+        }
+
+        public MThread(int i, RegisterEventListener registerEventListener, int count) {
+            this.registerEventListener = registerEventListener;
+            choice = i;
+            this.count = count;
         }
 
         @Override
@@ -109,11 +125,15 @@ public class MultiThreadActivity extends AppCompatActivity {
             switch (choice) {
                 case 1:
                     i = 0;
-                    while (isRunning && i<5){
+                    while (isRunning && i<10){
                         try {
-                            Thread.sleep(2000);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
+                        }
+                        //call callback
+                        if(i % 2 == 0){
+                            registerEventListener.onAEvent(i);
                         }
                         tv1.setText(String.valueOf(i));
                         Log.d("bibi", "Thread 1: " + i);
@@ -132,7 +152,7 @@ public class MultiThreadActivity extends AppCompatActivity {
                     i = 0;
                     while (isRunning && i<5){
                         try {
-                            Thread.sleep(4000);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -140,6 +160,9 @@ public class MultiThreadActivity extends AppCompatActivity {
                         Log.d("bibi", "Thread 3: " + i);
                         i++;
                     }
+                    break;
+                case 4:
+                    tv2.setText(String.valueOf(count));
                     break;
                 default:
                     break;

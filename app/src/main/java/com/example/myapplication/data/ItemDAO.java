@@ -29,13 +29,7 @@ public interface ItemDAO {
     @Update
     void updateItem(Item item);
 
-    @Update
-    void updateItem(int id);
-
     @Delete
     void deleteItem(Item item);
-
-    @Delete
-    void deleteItem(int id);
 
 }

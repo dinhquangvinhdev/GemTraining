@@ -45,6 +45,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         Log.d("bibi", "update customer database");
+        String drop_customer_table =  "DROP TABLE IF EXISTS " + TABLE_NAME;
+        sqLiteDatabase.execSQL(drop_customer_table);
+        onCreate(sqLiteDatabase);
     }
 
     public long addCustomer(Customer customer){

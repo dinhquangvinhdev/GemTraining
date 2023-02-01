@@ -18,6 +18,19 @@ public class Item {
     @Ignore
     private String customerBuy;
 
+    public Item(int id, String name) {
+        this.id = id;
+        this.nameItem = name;
+    }
+
+    public Item() {
+
+    }
+
+    public Item(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -56,5 +69,16 @@ public class Item {
 
     public void setCustomerBuy(String customerBuy) {
         this.customerBuy = customerBuy;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", nameItem='" + nameItem + '\'' +
+                ", price=" + price +
+                ", quantityInStock=" + quantityInStock +
+                ", customerBuy='" + customerBuy + '\'' +
+                '}';
     }
 }

@@ -105,7 +105,7 @@
             android:layout_marginBottom="10dp"
             android:text="add Customer"
             android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_get_all_customer"
+            app:layout_constraintBottom_toTopOf="@id/btn_update_customer"
             app:layout_constraintEnd_toStartOf="@+id/btn_get_customer_by_name"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
@@ -129,9 +129,32 @@
             android:layout_marginBottom="10dp"
             android:text="Get All Customers"
             android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_delete_customer"
+            app:layout_constraintEnd_toEndOf="@id/btn_get_customer_by_name"
+            app:layout_constraintStart_toStartOf="@id/btn_get_customer_by_name" />
+
+        <Button
+            android:id="@+id/btn_update_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Update Customer"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_delete_customer"
+            app:layout_constraintEnd_toEndOf="@id/btn_add_customer"
+            app:layout_constraintStart_toStartOf="@id/btn_add_customer"/>
+
+        <Button
+            android:id="@+id/btn_delete_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Delete Customer"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_add_customer" />
+            app:layout_constraintEnd_toEndOf="@id/btn_update_customer"
+            app:layout_constraintStart_toStartOf="@id/btn_update_customer"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

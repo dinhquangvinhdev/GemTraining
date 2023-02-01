@@ -1,7 +1,6 @@
 package com.example.myapplication.manager;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.example.myapplication.database.DatabaseHandler;
 import com.example.myapplication.model.Customer;
@@ -15,8 +14,8 @@ public class CustomerManager {
         databaseHandler = new DatabaseHandler(context,1);
     }
 
-    public void addCustomer(String name , int age){
-        databaseHandler.addCustomer(new Customer(age , name));
+    public long addCustomer(String name , int age){
+        return databaseHandler.addCustomer(new Customer(age , name));
     }
 
     public Customer getCustomer(String name){
@@ -25,5 +24,11 @@ public class CustomerManager {
 
     public List<Customer> getALLCustomer(){
         return databaseHandler.queryAllCustomer();
+    }
+
+    public int updateCustomer(Customer customer){return databaseHandler.updateCustomer(customer);}
+
+    public int deleteCustomer(Customer customer){
+        return  databaseHandler.deleteCustomer(customer);
     }
 }

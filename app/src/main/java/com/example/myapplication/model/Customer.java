@@ -12,6 +12,11 @@ public class Customer {
         this.age = age;
     }
 
+    public Customer(int age) {
+        this.age = age;
+        this.name = null;
+    }
+
     public int getAge() {
         return age;
     }

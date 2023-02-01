@@ -47,16 +47,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d("bibi", "update customer database");
     }
 
-    public void addCustomer(Customer customer){
+    public long addCustomer(Customer customer){
         //using SQLiteDatabase for have more instance
         SQLiteDatabase db = this.getReadableDatabase();
         //using contentValues for update data for each row
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, customer.getName());
         values.put(KEY_AGE, customer.getAge());
-        db.insert(TABLE_NAME, null, values);
+        long isAdd = db.insert(TABLE_NAME, null, values); // it will return the id row
         //remember for closing
         db.close();
+
+        return isAdd;
     }
 
     /**
@@ -93,5 +95,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         }
         return arr;
+    }
+
+    public int updateCustomer(Customer customer){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_AGE, customer.getAge());
+        contentValues.put(KEY_NAME , customer.getName());
+
+        int isUpdating = db.update(TABLE_NAME , contentValues , KEY_AGE + " = ?", new String[]{String.valueOf(customer.getAge())});
+        db.close();
+
+        return isUpdating;
+    }
+
+    public int deleteCustomer(Customer customer){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_NAME , customer.getName());
+        contentValues.put(KEY_AGE , customer.getAge());
+
+        int isDelete = db.delete(TABLE_NAME, KEY_AGE + " = ?", new String[]{String.valueOf(customer.getAge())});
+        db.close();
+
+        return isDelete;
     }
 }

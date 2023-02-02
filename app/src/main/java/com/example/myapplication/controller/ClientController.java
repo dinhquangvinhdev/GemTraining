@@ -18,7 +18,7 @@ public class ClientController {
     }
 
     public static synchronized ClientController getInstance(){
-        if(clientController != null){
+        if(clientController == null){
             clientController = new ClientController();
         }
         return clientController;

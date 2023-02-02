@@ -28,6 +28,7 @@ public class TestMApiActivity extends AppCompatActivity {
         binding = ActivityTestMapiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         processData();

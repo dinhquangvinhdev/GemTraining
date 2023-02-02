@@ -44,9 +44,9 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.idTv.setText(data.get(position).getId());
-        holder.bodyTv.setText(data.get(position).getId());
-        holder.titleTv.setText(data.get(position).getId());
+        holder.idTv.setText(String.valueOf(data.get(position).getId()));
+        holder.bodyTv.setText(data.get(position).getBody());
+        holder.titleTv.setText(data.get(position).getTitle());
     }
 
     @Override

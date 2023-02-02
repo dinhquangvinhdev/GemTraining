@@ -45,6 +45,7 @@ public class TestMApiActivity extends AppCompatActivity {
                 adapter = new NewAdapter(data);
                 binding.recyclerView.setAdapter(adapter);
                 binding.progressBar.setVisibility(View.VISIBLE);
+                binding.fab.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -52,5 +53,10 @@ public class TestMApiActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "failed for requesting api" , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void goToFirstPage(View view) {
+        if(binding.recyclerView != null)
+            binding.recyclerView.getLayoutManager().scrollToPosition(0);
     }
 }

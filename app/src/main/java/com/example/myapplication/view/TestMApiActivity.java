@@ -15,6 +15,7 @@ import com.example.myapplication.adapter.NewAdapter;
 import com.example.myapplication.controller.ClientController;
 import com.example.myapplication.databinding.ActivityTestMapiBinding;
 import com.example.myapplication.model.New;
+import com.example.myapplication.model.User;
 
 import java.util.List;
 
@@ -66,7 +67,49 @@ public class TestMApiActivity extends AppCompatActivity {
             binding.recyclerView.getLayoutManager().scrollToPosition(0);
     }
 
-    public void addNew(View view) {
+    public void addNewModel(View view) {
+        //addNew();
+        addUser();
+    }
+
+    private void addUser() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_add_user);
+        EditText edtNameUser = dialog.findViewById(R.id.edt_input_user_name);
+        Button btnAdd = dialog.findViewById(R.id.btn_add_new);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = edtNameUser.getText().toString();
+                Call<User> call = ClientController.getInstance().getApi().createUser(new User(name));
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        Toast.makeText(getApplicationContext() , "" + response.code(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Toast.makeText(getApplicationContext() , "failed to post User into Api", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
+        dialog.show();
+    }
+
+    private void addNew() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_add_new);
 

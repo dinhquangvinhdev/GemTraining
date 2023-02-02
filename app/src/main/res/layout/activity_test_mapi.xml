@@ -47,6 +47,6 @@
         android:background="#EA739B"
         android:src="@drawable/ic_baseline_add"
         android:visibility="invisible"
-        android:onClick="addNew"/>
+        android:onClick="addNewModel"/>
 
 </RelativeLayout>

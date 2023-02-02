@@ -16,4 +16,7 @@ public interface MApi {
 
     @POST("posts")
     Call<New> createNew(@Body New aNew);
+
+    @POST("users")
+    Call<User> createUser(@Body User user);
 }

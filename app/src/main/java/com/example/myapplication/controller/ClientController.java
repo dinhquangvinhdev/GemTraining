@@ -24,7 +24,7 @@ public class ClientController {
         return clientController;
     }
 
-    MApi getApi(){
+    public MApi getApi(){
         return retrofit.create(MApi.class);
     }
 }

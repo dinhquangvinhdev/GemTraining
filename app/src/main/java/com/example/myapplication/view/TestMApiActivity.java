@@ -45,7 +45,8 @@ public class TestMApiActivity extends AppCompatActivity {
                 adapter = new NewAdapter(data);
                 binding.recyclerView.setAdapter(adapter);
                 binding.progressBar.setVisibility(View.VISIBLE);
-                binding.fab.setVisibility(View.VISIBLE);
+                binding.fabScrollUp.setVisibility(View.VISIBLE);
+                binding.fabAddNew.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -58,5 +59,9 @@ public class TestMApiActivity extends AppCompatActivity {
     public void goToFirstPage(View view) {
         if(binding.recyclerView != null)
             binding.recyclerView.getLayoutManager().scrollToPosition(0);
+    }
+
+    public void addNew(View view) {
+        
     }
 }

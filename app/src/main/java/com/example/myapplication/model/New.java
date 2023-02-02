@@ -4,14 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class New {
     @SerializedName("userId")
-    int idUser;
-    int id;
-    String title;
-    String body;
+    private int idUser;
+    private Integer id;
+    private String title;
+    private String body;
 
-    public New(int idUser, int id, String title, String body) {
+    public New(String title, String body, int idUser) {
         this.idUser = idUser;
-        this.id = id;
         this.title = title;
         this.body = body;
     }
@@ -53,5 +52,15 @@ public class New {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "New{" +
+                "idUser=" + idUser +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                '}';
     }
 }

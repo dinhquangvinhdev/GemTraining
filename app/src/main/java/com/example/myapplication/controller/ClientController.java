@@ -1,6 +1,7 @@
 package com.example.myapplication.controller;
 
 import com.example.myapplication.api.MApi;
+import com.example.myapplication.model.New;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

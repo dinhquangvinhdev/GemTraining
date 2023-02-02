@@ -3,10 +3,14 @@ package com.example.myapplication.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.example.myapplication.adapter.NewAdapter;
 import com.example.myapplication.controller.ClientController;
 import com.example.myapplication.databinding.ActivityTestMapiBinding;
@@ -41,14 +45,15 @@ public class TestMApiActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<New>>() {
             @Override
             public void onResponse(Call<List<New>> call, Response<List<New>> response) {
-                List<New> data = response.body();
-                adapter = new NewAdapter(data);
-                binding.recyclerView.setAdapter(adapter);
-                binding.progressBar.setVisibility(View.VISIBLE);
-                binding.fabScrollUp.setVisibility(View.VISIBLE);
-                binding.fabAddNew.setVisibility(View.VISIBLE);
+                if(response.isSuccessful()){
+                    List<New> data = response.body();
+                    adapter = new NewAdapter(data);
+                    binding.recyclerView.setAdapter(adapter);
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    binding.fabScrollUp.setVisibility(View.VISIBLE);
+                    binding.fabAddNew.setVisibility(View.VISIBLE);
+                }
             }
-
             @Override
             public void onFailure(Call<List<New>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "failed for requesting api" , Toast.LENGTH_SHORT).show();
@@ -62,6 +67,59 @@ public class TestMApiActivity extends AppCompatActivity {
     }
 
     public void addNew(View view) {
-        
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_add_new);
+
+        Button btnAdd = dialog.findViewById(R.id.btn_add_new);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+        EditText edtIdUser, edtTitle, edtBody;
+        edtIdUser = dialog.findViewById(R.id.edt_input_new_userid);
+        edtTitle = dialog.findViewById(R.id.edt_input_new_title);
+        edtBody = dialog.findViewById(R.id.edt_input_new_body);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add new in here
+                String idUser, title , body;
+                idUser = edtIdUser.getText().toString();
+                title = edtTitle.getText().toString();
+                body = edtBody.getText().toString();
+                if(!idUser.isEmpty() && !title.isEmpty() && !body.isEmpty()){
+                    Call<New> call = ClientController.getInstance().getApi().createNew(
+                            new New(title ,body, Integer.parseInt(idUser))
+                    );
+                    call.enqueue(new Callback<New>() {
+                        @Override
+                        public void onResponse(Call<New> call, Response<New> response) {
+                            if(response.isSuccessful()){
+                                String content = "";
+
+                                content = "Code: " + response.code() + "\n"
+                                        + "body: " + ((response.body() != null)? "" : response.body().toString());
+
+                                Toast.makeText(getApplicationContext() , content, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<New> call, Throwable t) {
+                            Toast.makeText(getApplicationContext() , "failed to post New into Api", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // cancel add new in here
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void postNew(New data, String idUser, String title, String body) {
+
     }
 }

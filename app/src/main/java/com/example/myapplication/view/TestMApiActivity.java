@@ -90,7 +90,7 @@ public class TestMApiActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = edtNameUser.getText().toString();
-                Call<User> call = ClientController.getInstance().getApi().createUser(new User(name));
+                Call<User> call = ClientController.getInstance().getApi().updateUser(name);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {

@@ -10,7 +10,11 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface MApi {
     @GET("posts")
@@ -26,6 +30,13 @@ public interface MApi {
     @POST("user")
     Call<User> updateUser(@Field("name") String name);
 
+    // PUT method is used to update an existing resource if not found create new one
+    // while POST method is used to create a new resource
+    // while PATCH method is used just to update
+    @PUT("posts/{id}")
+    Call<New> putNew(@Path("id") int id , @Body New aNew);
 
+    @PATCH("posts/{id}")
+    Call<New> patchNew(@Path("id") int id , @Body New aNew);
 
 }

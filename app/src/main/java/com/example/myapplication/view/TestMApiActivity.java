@@ -165,10 +165,42 @@ public class TestMApiActivity extends AppCompatActivity implements OnClickItemAd
 
     @Override
     public void onClickItem(int position) {
-        putNew(position);
+        New tempNew = new New("sample title","sample body", 1);
+        putNew(position , tempNew);
+        //patchNew(position, tempNew);
     }
 
-    private void putNew(int position) {
-        Toast.makeText(this, "click " + position, Toast.LENGTH_SHORT).show();
+    private void patchNew(int position, New tempNew) {
+        Call<New> call = ClientController.getInstance().getApi().patchNew(position + 1, tempNew);
+        call.enqueue(new Callback<New>() {
+            @Override
+            public void onResponse(Call<New> call, Response<New> response) {
+                String content = "Code: " + response.code() + "\n"
+                        + "body: " + response.body().toString();
+                Toast.makeText(getApplicationContext() , content, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<New> call, Throwable t) {
+                Toast.makeText(getApplicationContext() , "failed to post New into Api", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void putNew(int position, New tempNew) {
+        Call<New> call = ClientController.getInstance().getApi().putNew(position + 1, tempNew);
+        call.enqueue(new Callback<New>() {
+            @Override
+            public void onResponse(Call<New> call, Response<New> response) {
+                String content = "Code: " + response.code() + "\n"
+                            + "body: " + response.body().toString();
+                Toast.makeText(getApplicationContext() , content, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<New> call, Throwable t) {
+                Toast.makeText(getApplicationContext() , "failed to post New into Api", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

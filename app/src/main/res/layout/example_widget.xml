@@ -9,5 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="#C5E413"
+        android:background="@color/teal_700"/>
 </LinearLayout>

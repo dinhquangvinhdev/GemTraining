@@ -14,6 +14,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.NewAdapter;
 import com.example.myapplication.controller.ClientController;
 import com.example.myapplication.databinding.ActivityTestMapiBinding;
+import com.example.myapplication.mInterface.OnClickItemAdapter;
 import com.example.myapplication.model.New;
 import com.example.myapplication.model.User;
 
@@ -23,9 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TestMApiActivity extends AppCompatActivity {
+public class TestMApiActivity extends AppCompatActivity implements OnClickItemAdapter {
     private ActivityTestMapiBinding binding;
     private NewAdapter adapter;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,6 @@ public class TestMApiActivity extends AppCompatActivity {
 
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         processData();
     }
 
@@ -48,7 +49,7 @@ public class TestMApiActivity extends AppCompatActivity {
             public void onResponse(Call<List<New>> call, Response<List<New>> response) {
                 if(response.isSuccessful()){
                     List<New> data = response.body();
-                    adapter = new NewAdapter(data);
+                    adapter = new NewAdapter(data, TestMApiActivity.this);
                     binding.recyclerView.setAdapter(adapter);
                     binding.progressBar.setVisibility(View.VISIBLE);
                     binding.fabScrollUp.setVisibility(View.VISIBLE);
@@ -162,7 +163,12 @@ public class TestMApiActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void postNew(New data, String idUser, String title, String body) {
+    @Override
+    public void onClickItem(int position) {
+        putNew(position);
+    }
 
+    private void putNew(int position) {
+        Toast.makeText(this, "click " + position, Toast.LENGTH_SHORT).show();
     }
 }

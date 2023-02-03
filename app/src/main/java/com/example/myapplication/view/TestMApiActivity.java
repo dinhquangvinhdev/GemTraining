@@ -166,8 +166,24 @@ public class TestMApiActivity extends AppCompatActivity implements OnClickItemAd
     @Override
     public void onClickItem(int position) {
         New tempNew = new New("sample title","sample body", 1);
-        putNew(position , tempNew);
-        //patchNew(position, tempNew);
+        // putNew(position , tempNew);
+        // patchNew(position, tempNew);
+        deleteNew(position);
+    }
+
+    private void deleteNew(int position) {
+        Call<Void> call = ClientController.getInstance().getApi().deleteNew(position + 1);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getApplicationContext() , "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getApplicationContext() , "failed to post New into Api", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void patchNew(int position, New tempNew) {

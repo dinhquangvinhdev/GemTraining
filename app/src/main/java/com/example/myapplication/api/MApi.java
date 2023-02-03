@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -39,4 +40,6 @@ public interface MApi {
     @PATCH("posts/{id}")
     Call<New> patchNew(@Path("id") int id , @Body New aNew);
 
+    @DELETE("posts/{id}")
+    Call<Void> deleteNew(@Path("id") int id);
 }

@@ -5,6 +5,7 @@ import com.example.myapplication.model.User;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -23,6 +24,9 @@ public interface MApi {
 
     @POST("posts")
     Call<New> createNew(@Body New aNew);
+
+    @POST("posts")
+    Observable<List<New>> getAllNew();
 
     @POST("users")
     Call<User> createUser(@Body User user);

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +19,15 @@ import com.example.myapplication.mInterface.OnClickItemAdapter;
 import com.example.myapplication.model.New;
 import com.example.myapplication.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +36,8 @@ public class TestMApiActivity extends AppCompatActivity implements OnClickItemAd
     private ActivityTestMapiBinding binding;
     private NewAdapter adapter;
     private int position;
+    private List<New> arr;
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,48 @@ public class TestMApiActivity extends AppCompatActivity implements OnClickItemAd
     }
 
     private void processData() {
+        // getAllNews1();
+        getAllNews2();
+    }
+
+    private void getAllNews2() {
+        //Create a list in here
+        arr = new ArrayList<>();
+
+        ClientController.getInstance().getApi().getAllNew()
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<New>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.d("bibi", "onSubcribe");
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NonNull List<New> news) {
+                        Log.d("bibi", news.get(0).toString());
+                        arr = news;
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d("bibi", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("bibi", "onComplete");
+                        adapter = new NewAdapter(arr, TestMApiActivity.this);
+                        binding.recyclerView.setAdapter(adapter);
+                        binding.progressBar.setVisibility(View.VISIBLE);
+                        binding.fabScrollUp.setVisibility(View.VISIBLE);
+                        binding.fabAddNew.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
+
+    private void getAllNews1() {
         //get news through Api
         Call<List<New>> call = ClientController.getInstance().getApi().getData();
         //add request to enqueue
@@ -218,5 +270,13 @@ public class TestMApiActivity extends AppCompatActivity implements OnClickItemAd
                 Toast.makeText(getApplicationContext() , "failed to post New into Api", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (disposable != null){
+            disposable.dispose();
+        }
     }
 }
